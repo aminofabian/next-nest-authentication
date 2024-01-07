@@ -8,9 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  
+
   constructor(private userService: UserService, private jwtService: JwtService) { }
-  
+
 
   async login(dto: LoginDto) {
     const user = await this.validateUser(dto);
@@ -18,9 +18,9 @@ export class AuthService {
       username: user.email,
       sub: {
         name: user.name,
-      
+
       }
-    
+
     };
 
     return {
@@ -54,20 +54,20 @@ export class AuthService {
       sub: {
         name: user.name,
       },
-    
+
     }
     return {
-        accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '1h',
-          secret: process.env.JwtSecretKey,
-        }),
-        refreshToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '14d',
-          secret: process.env.jwtRefreshTokenKey,
-        }),
+      accessToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '15',
+        secret: process.env.JwtSecretKey,
+      }),
+      refreshToken: await this.jwtService.signAsync(payload, {
+        expiresIn: '7d',
+        secret: process.env.jwtRefreshTokenKey,
+      }),
     }
-  
-  
+
+
   }
 
 
